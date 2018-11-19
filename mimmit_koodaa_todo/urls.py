@@ -21,8 +21,11 @@ from django.contrib.staticfiles.views import serve
 from django.urls import path, include
 from rest_framework import routers
 
+from todo import viewsets as todo_viewsets
+
 router = routers.DefaultRouter()
-# Register view sets here
+router.register(r'todo', todo_viewsets.TodoViewSet, basename='todo')
+router.register(r'category', todo_viewsets.TodoCategoryViewSet, basename='category')
 
 urlpatterns = [
     path('v1/', include(router.urls)),
