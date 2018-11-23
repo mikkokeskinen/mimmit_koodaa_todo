@@ -22,13 +22,17 @@ from django.urls import path, include
 from rest_framework import routers
 
 from todo import viewsets as todo_viewsets
+from todo.views import TodoView, TodoDetailView
 
 router = routers.DefaultRouter()
 router.register(r'todo', todo_viewsets.TodoViewSet, basename='todo')
-router.register(r'category', todo_viewsets.TodoCategoryViewSet, basename='category')
+router.register(r'category', todo_viewsets.TodoCategoryViewSet,
+                basename='category')
 
 urlpatterns = [
     path('v1/', include(router.urls)),
+    path('v2/todo/', TodoView.as_view()),
+    path('v2/todo/<int:todo_id>/', TodoDetailView.as_view()),
     path('admin/', admin.site.urls),
     url(r'^$', serve, kwargs={'path': 'index.html'}),
     url(r'^favicon.ico$', serve, kwargs={'path': 'favicon.ico'}),
